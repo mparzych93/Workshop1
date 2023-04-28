@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TaskManager {
@@ -70,19 +71,19 @@ public class TaskManager {
     public static String[][] removeTask(String[][] arrOfTasks){
         System.out.println("Please enter the index of the task you want to delete. Remember that the task numbering starts from 0!");
         Scanner scanTaskIndexToRemove = new Scanner(System.in);
-        int taskIndexToRemove = scanTaskIndexToRemove.nextInt();
-        while (taskIndexToRemove < 0 || taskIndexToRemove >= arrOfTasks.length){
-            System.out.println("The entered index does not represent any task. Enter again.");
-            taskIndexToRemove = scanTaskIndexToRemove.nextInt();
-        }
-        arrOfTasks[taskIndexToRemove] = null;
-        for (int i = 0; i < arrOfTasks.length - 1; i++) {
-            if (arrOfTasks[i] == null) {
-                arrOfTasks[i] = arrOfTasks[i + 1];
-                arrOfTasks[i + 1] = null;
+        try {
+            int taskIndexToRemove = scanTaskIndexToRemove.nextInt();
+            while (taskIndexToRemove < 0 || taskIndexToRemove >= arrOfTasks.length) {
+                System.out.println("The entered index does not represent any task. Enter again.");
+                taskIndexToRemove = scanTaskIndexToRemove.nextInt();
             }
+            for (int i = taskIndexToRemove; i < arrOfTasks.length - 1; i++) {
+                arrOfTasks[i] = arrOfTasks[i + 1];
+            }
+            arrOfTasks = Arrays.copyOf(arrOfTasks, arrOfTasks.length - 1);
+        } catch (InputMismatchException e){
+            System.out.println("The text entered is not a number, you return to the menu.");
         }
-        arrOfTasks = Arrays.copyOf(arrOfTasks, arrOfTasks.length - 1);
         return arrOfTasks;
     }
     public static void viewListOfTasks(String[][] arrOfTasks){
