@@ -82,7 +82,7 @@ public class TaskManager {
             }
             arrOfTasks = Arrays.copyOf(arrOfTasks, arrOfTasks.length - 1);
         } catch (InputMismatchException e){
-            System.out.println("The text entered is not a number, you return to the menu.");
+            System.out.println("The text entered is not a number, you return to the menu..");
         }
         return arrOfTasks;
     }
